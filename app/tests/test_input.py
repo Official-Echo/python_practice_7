@@ -2,7 +2,7 @@ import os
 import unittest
 from unittest.mock import patch
 
-from app.io.input import read_from_console
+from app.io.input import read_from_console, read_from_file_builtin
 
 
 class TestInputFunctions(unittest.TestCase):
@@ -32,6 +32,20 @@ class TestInputFunctions(unittest.TestCase):
         with patch("builtins.input", return_value="Test") as test_input:
             read_from_console()
             test_input.assert_called_once_with("Enter text: ")
+
+    def test_read_from_file_builtin_exists(self):
+        """Test that read_from_file_builtin is a callable function."""
+        self.assertTrue(callable(read_from_file_builtin))
+
+    def test_read_from_file_builtin_reads_default(self):
+        """Test that read_from_file_builtin reads from the default file."""
+        result = read_from_file_builtin()
+        self.assertEqual(result, "Sample text content")
+
+    def test_read_from_file_builtin_returns_string(self):
+        """Test that read_from_file_builtin returns a string."""
+        result = read_from_file_builtin(self.sample_txt)
+        self.assertIsInstance(result, str)
 
     def tearDown(self):
         """Clean up after each test."""

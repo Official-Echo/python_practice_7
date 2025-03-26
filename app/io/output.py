@@ -7,10 +7,10 @@ def print_to_console(text):
     text : str
         The text to be printed to the console.
     """
-    pass
+    print(text)
 
 
-def write_to_file_builtin(text):
+def write_to_file_builtin(text, file_name="data/output.txt"):
     """
         Writes the provided text to a file using Python's built-in file handling.
 
@@ -18,5 +18,8 @@ def write_to_file_builtin(text):
         ----------
         text : str
             The text to be written to the file.
+        file_name : str
+            File handle of the file to write to. Defaults to "data/output.txt"
         """
-    pass
+    with open("data/output.txt", "w") as file:
+        file.write(text)

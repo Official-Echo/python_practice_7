@@ -1,8 +1,9 @@
 import os
 import unittest
+import pandas as pd
 from unittest.mock import patch
 
-from app.io.input import read_from_console, read_from_file_builtin
+from app.io.input import read_from_console, read_from_file_builtin, read_from_file_pandas
 
 
 class TestInputFunctions(unittest.TestCase):
@@ -45,6 +46,21 @@ class TestInputFunctions(unittest.TestCase):
     def test_read_from_file_builtin_returns_string(self):
         """Test that read_from_file_builtin returns a string."""
         result = read_from_file_builtin(self.sample_txt)
+        self.assertIsInstance(result, str)
+
+    def test_read_from_file_pandas_exists(self):
+        """Test that read_from_file_pandas is a callable function."""
+        self.assertTrue(callable(read_from_file_pandas))
+
+    def test_read_from_file_pandas_reads_default(self):
+        """Test that read_from_file_pandas reads from the default CSV file."""
+        result = read_from_file_pandas()
+        expected = pd.read_csv(self.sample_csv).to_string()
+        self.assertEqual(result, expected)
+
+    def test_read_from_file_pandas_returns_string(self):
+        """Test that read_from_file_pandas returns a string."""
+        result = read_from_file_pandas(self.sample_csv)
         self.assertIsInstance(result, str)
 
     def tearDown(self):
